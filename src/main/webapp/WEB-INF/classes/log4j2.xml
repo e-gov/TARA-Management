@@ -7,7 +7,7 @@
 
 	<Appenders>
 		<RollingFile name="cas-management" fileName="${baseDir}/cas-management.log" append="true"
-		             filePattern="cas-management-%d{yyyy-MM-dd-HH}-%i.log.gz">
+		             filePattern="${baseDir}/cas-management-%d{yyyy-MM-dd-HH}-%i.log.gz">
 			<PatternLayout pattern="%d %p [%c] - %m%n"/>
 			<Policies>
 				<OnStartupTriggeringPolicy />
