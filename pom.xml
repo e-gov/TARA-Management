@@ -6,7 +6,7 @@
     <groupId>org.apereo.cas</groupId>
     <artifactId>cas-overlay</artifactId>
     <packaging>war</packaging>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 
     <build>
         <plugins>
