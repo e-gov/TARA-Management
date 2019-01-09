@@ -36,7 +36,7 @@
 		<AsyncLogger name="org.apereo.inspektr.audit.support.Slf4jLoggingAuditTrailManager" level="info">
 			<AppenderRef ref="cas-management"/>
 		</AsyncLogger>
-		<Root level="error">
+		<Root level="warn">
 			<AppenderRef ref="cas-management"/>
 		</Root>
 	</Loggers>
