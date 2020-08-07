@@ -1,0 +1,16 @@
+<app-input field="displayNameEN" [change]="data.service" [orig]="data.original">
+  <mat-form-field class="textInput">
+    <mat-placeholder i18n-placeholder="services.form.label.display.name.en">
+      {{ messages.services_form_label_display_name_en }}
+    </mat-placeholder>
+    <input matInput #serviceDisplayNameEN="ngModel" name="serviceDisplayNameEN" id="serviceDisplayNameEN"
+           [(ngModel)]="data.service.displayNameEN" [attr.maxlength]="40">
+    <mat-hint align="end">
+      <app-hint></app-hint>
+    </mat-hint>
+  </mat-form-field>
+  <mat-icon appHelp
+            i18n-matTooltip="services.form.tooltip.display.name.en"
+            [matTooltip]="messages.services_form_tooltip_display_name_en">
+  </mat-icon>
+</app-input>

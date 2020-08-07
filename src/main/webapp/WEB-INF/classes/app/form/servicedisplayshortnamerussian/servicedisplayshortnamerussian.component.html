@@ -1,0 +1,16 @@
+<app-input field="displayShortName.ru" [change]="data.service" [orig]="data.original">
+  <mat-form-field class="textInput">
+    <mat-placeholder i18n-placeholder="services.form.label.display.shortname.ru">
+      {{ messages.services_form_label_display_shortName_ru }}
+    </mat-placeholder>
+    <input matInput #serviceDisplayShortNameRU="ngModel" name="serviceDisplayShortNameRU" id="serviceDisplayShortNameRU"
+           [(ngModel)]="data.service.displayShortNameRU" [attr.maxlength]="40">
+    <mat-hint align="end">
+      <app-hint></app-hint>
+    </mat-hint>
+  </mat-form-field>
+  <mat-icon appHelp
+            i18n-matTooltip="services.form.tooltip.display.shortname.ru"
+            [matTooltip]="messages.services_form_tooltip_display_short_name_ru">
+  </mat-icon>
+</app-input>
