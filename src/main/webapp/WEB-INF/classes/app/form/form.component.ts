@@ -26,6 +26,7 @@ import {map} from 'rxjs/operators';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {AppConfigService} from '../app-config.service';
 import {ServiceItem} from "../../domain/service-item";
+import {forEach} from "@angular/router/src/utils/collection";
 
 enum Tabs {
   BASICS,
@@ -224,58 +225,82 @@ export class FormComponent implements OnInit {
       setTimeout(() => {
         this.goto(( formErrors > 0 && this.isCas() ) ? formErrors - 1 : formErrors ) }, 10);
     } else {
-      this.isServiceNameValidSubscription = this.service.getAllServices().subscribe(services => {
+      this.service.getAllServices().subscribe(services => {
         this.serviceList = services;
         this.checkServiceNameValidity();
-        this.isServiceNameValidSubscription.unsubscribe();
+
       });
+
     }
   };
 
+  getDisplayName(service: AbstractRegisteredService, propertyName: string): String {
+    if (service.properties[propertyName]) {
+      return service.properties[propertyName].values[0];
+    }
+
+    return "";
+  }
+
   checkServiceNameValidity() {
-    let serviceDisplayNames: String[] = [];
-    let serviceDisplayShortNames: String[] = [];
-    let serviceEnglishDisplayNames: String[] = [];
-    let serviceEnglishDisplayShortNames: String[] = [];
-    let serviceRussianDisplayNames: String[] = [];
-    let serviceRussianDisplayShortNames: String[] = [];
+    let serviceDisplayName: String = "";
+    let serviceDisplayShortName: String = "";
+    let serviceEnglishDisplayName: String = "";
+    let serviceEnglishDisplayShortName: String = "";
+    let serviceRussianDisplayName: String = "";
+    let serviceRussianDisplayShortName: String = "";
     for (const service of this.serviceList) {
-      if (service.name != undefined) { serviceDisplayNames.push(service.name); }
-      if (service.displayShortName != undefined) {serviceDisplayShortNames.push(service.displayShortName); }
-      if (service.displayNameEN != undefined) {serviceEnglishDisplayNames.push(service.displayNameEN); }
-      if (service.name != undefined) {serviceEnglishDisplayShortNames.push(service.name); }
-      if (service.displayNameRU != undefined) {serviceRussianDisplayNames.push(service.displayNameRU); }
-      if (service.displayShortNameRU != undefined) {serviceRussianDisplayShortNames.push(service.displayShortNameRU); }
-    }
+        serviceDisplayName = this.getDisplayName(service, "service.name");
+        serviceDisplayShortName = this.getDisplayName(service, "service.shortName");
+        serviceEnglishDisplayName = this.getDisplayName(service, "service.name.en");
+        serviceEnglishDisplayShortName = this.getDisplayName(service, "service.shortName.en");
+        serviceRussianDisplayName = this.getDisplayName(service, "service.name.ru");
+        serviceRussianDisplayShortName = this.getDisplayName(service, "service.shortName.ru");
 
-    if (this.data.service.displayName != "" && serviceDisplayNames.includes(this.data.service.displayName)) {
-      this.service.setDisplayErrorData({ "error": "displayName" });
-      return;
-    }
+        if (service.id != this.data.service.id) {
+          for (let value of Object["values"](this.data.service.properties)) {
+            const keyValue = value.values[0];
+            if (keyValue == serviceDisplayName) {
+              this.service.setDisplayErrorData({"error": "displayName"});
+              return;
+            } else {
+              this.service.setDisplayErrorData({});
+            }
 
-    if (this.data.service.displayShortName != "" && serviceDisplayShortNames.includes(this.data.service.displayShortName)) {
-      this.service.setDisplayErrorData({ "error": "displayShortName" });
-      return;
-    }
+            if (keyValue == serviceDisplayShortName) {
+              this.service.setDisplayErrorData({"error": "displayShortName"});
+              return;
+            } else {
+              this.service.setDisplayErrorData({});
+            }
 
-    if (this.data.service.displayNameEN != "" && serviceEnglishDisplayNames.includes(this.data.service.displayNameEN)) {
-      this.service.setDisplayErrorData({ "error": "displayNameEN" });
-      return;
-    }
+            if (keyValue == serviceEnglishDisplayName) {
+              this.service.setDisplayErrorData({"error": "displayNameEN"});
+              return;
+            } else {
+              this.service.setDisplayErrorData({});
+            }
 
-    if (this.data.service.displayShortNameEN != "" && serviceEnglishDisplayShortNames.includes(this.data.service.displayShortNameEN)) {
-      this.service.setDisplayErrorData({ "error": "displayShortNameEN" });
-      return;
-    }
+            if (keyValue == serviceEnglishDisplayShortName) {
+              this.service.setDisplayErrorData({"error": "displayShortNameEN"});
+              return;
+            } else {
+              this.service.setDisplayErrorData({});
+            }
 
-    if (this.data.service.displayNameRU != "" && serviceRussianDisplayNames.includes(this.data.service.displayNameRU)) {
-      this.service.setDisplayErrorData({ "error": "displayNameRU" });
-      return;
-    }
+            if (keyValue == serviceRussianDisplayName) {
+              this.service.setDisplayErrorData({"error": "displayNameRU"});
+              return;
+            }
 
-    if (this.data.service.displayShortNameRU != "" && serviceRussianDisplayShortNames.includes(this.data.service.displayShortNameRU)) {
-      this.service.setDisplayErrorData({ "error": "displayShortNameRU" });
-      return;
+            if (keyValue == serviceRussianDisplayShortName) {
+              this.service.setDisplayErrorData({"error": "displayShortNameRU"});
+              return;
+            } else {
+              this.service.setDisplayErrorData({});
+            }
+        }
+      }
     }
 
     this.saveServiceForm();
@@ -285,8 +310,8 @@ export class FormComponent implements OnInit {
   saveServiceForm() {
     this.service.saveService(this.data.service)
         .subscribe(
-            resp => this.handleSave(resp),
-            () => this.handleNotSaved()
+          resp => this.handleSave(resp),
+          () => this.handleNotSaved()
         );
   }
 

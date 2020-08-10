@@ -4,7 +4,8 @@
       {{ messages.services_form_label_display_name }}
     </mat-placeholder>
     <input matInput #serviceDisplayName="ngModel" name="serviceDisplayName" id="serviceDisplayName"
-           [(ngModel)]="data.service.displayName" [attr.maxlength]="40">
+           [ngModel]="data.service.properties['service.name'] ? data.service.properties['service.name'].values : ''"
+           (change)="doChange($event.target.value)" [attr.maxlength]="40">
     <mat-hint align="end">
       <app-hint></app-hint>
     </mat-hint>

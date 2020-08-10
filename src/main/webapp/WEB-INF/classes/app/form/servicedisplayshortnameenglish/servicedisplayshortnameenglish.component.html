@@ -4,7 +4,8 @@
       {{ messages.services_form_label_display_shortName_en }}
     </mat-placeholder>
     <input matInput #serviceDisplayShortNameEN="ngModel" name="serviceDisplayShortNameEN" id="serviceDisplayShortNameEN"
-           [(ngModel)]="data.service.displayShortNameEN" [attr.maxlength]="40">
+           [ngModel]="data.service.properties['service.shortName.en'] ? data.service.properties['service.shortName.en'].values : ''"
+           (change)="doChange($event.target.value)" [attr.maxlength]="40">
     <mat-hint align="end">
       <app-hint></app-hint>
     </mat-hint>

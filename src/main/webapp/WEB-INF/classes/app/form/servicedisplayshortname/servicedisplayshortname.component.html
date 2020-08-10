@@ -4,7 +4,8 @@
       {{ messages.services_form_label_display_shortName }}
     </mat-placeholder>
     <input matInput #serviceDisplayShortName="ngModel" name="serviceDisplayShortName" id="serviceDisplayShortName"
-           [(ngModel)]="data.service.displayShortName" [attr.maxlength]="40">
+           [ngModel]="data.service.properties['service.shortName'] ? data.service.properties['service.shortName'].values : ''"
+           (change)="doChange($event.target.value)" [attr.maxlength]="40">
     <mat-hint align="end">
       <app-hint></app-hint>
     </mat-hint>
@@ -14,3 +15,7 @@
             [matTooltip]="messages.services_form_tooltip_display_short_name">
   </mat-icon>
 </app-input>
+
+<div *ngIf="serviceError" style="color:red">
+  {{ serviceError }}
+</div>

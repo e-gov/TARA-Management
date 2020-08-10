@@ -35,7 +35,6 @@ export class FormService {
   }
 
   saveService(service: AbstractRegisteredService): Observable<number> {
-    console.log(service);
     return this.http.post('saveService', service)
       .pipe(
         catchError(e => this.handleError(e, this.dialog))
@@ -45,6 +44,7 @@ export class FormService {
   setDisplayErrorData(data) {
     this.displayErrorsSubject.next(data);
   }
+
   getDisplayErrorData(): Observable<any> {
     return this.displayErrorsSubject.asObservable();
   }
