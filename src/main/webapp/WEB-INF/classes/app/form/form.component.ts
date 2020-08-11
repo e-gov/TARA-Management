@@ -243,57 +243,51 @@ export class FormComponent implements OnInit {
   }
 
   checkServiceNameValidity() {
-    let serviceDisplayName: String = "";
-    let serviceDisplayShortName: String = "";
-    let serviceEnglishDisplayName: String = "";
-    let serviceEnglishDisplayShortName: String = "";
-    let serviceRussianDisplayName: String = "";
-    let serviceRussianDisplayShortName: String = "";
     for (const service of this.serviceList) {
-        serviceDisplayName = this.getDisplayName(service, "service.name");
-        serviceDisplayShortName = this.getDisplayName(service, "service.shortName");
-        serviceEnglishDisplayName = this.getDisplayName(service, "service.name.en");
-        serviceEnglishDisplayShortName = this.getDisplayName(service, "service.shortName.en");
-        serviceRussianDisplayName = this.getDisplayName(service, "service.name.ru");
-        serviceRussianDisplayShortName = this.getDisplayName(service, "service.shortName.ru");
+        let serviceDisplayName = this.getDisplayName(service, "service.name");
+        let serviceDisplayShortName = this.getDisplayName(service, "service.shortName");
+        let serviceEnglishDisplayName = this.getDisplayName(service, "service.name.en");
+        let serviceEnglishDisplayShortName = this.getDisplayName(service, "service.shortName.en");
+        let serviceRussianDisplayName = this.getDisplayName(service, "service.name.ru");
+        let serviceRussianDisplayShortName = this.getDisplayName(service, "service.shortName.ru");
 
         if (service.id != this.data.service.id) {
           for (let value of Object["values"](this.data.service.properties)) {
             const keyValue = value.values[0];
-            if (keyValue == serviceDisplayName) {
+            if (keyValue != "" && keyValue == serviceDisplayName) {
               this.service.setDisplayErrorData({"error": "displayName"});
               return;
             } else {
               this.service.setDisplayErrorData({});
             }
 
-            if (keyValue == serviceDisplayShortName) {
+            if (keyValue != "" && keyValue == serviceDisplayShortName) {
               this.service.setDisplayErrorData({"error": "displayShortName"});
               return;
             } else {
               this.service.setDisplayErrorData({});
             }
 
-            if (keyValue == serviceEnglishDisplayName) {
+            if (keyValue != "" && keyValue == serviceEnglishDisplayName) {
               this.service.setDisplayErrorData({"error": "displayNameEN"});
               return;
             } else {
               this.service.setDisplayErrorData({});
             }
 
-            if (keyValue == serviceEnglishDisplayShortName) {
+            if (keyValue != "" && keyValue == serviceEnglishDisplayShortName) {
               this.service.setDisplayErrorData({"error": "displayShortNameEN"});
               return;
             } else {
               this.service.setDisplayErrorData({});
             }
 
-            if (keyValue == serviceRussianDisplayName) {
+            if (keyValue != "" && keyValue == serviceRussianDisplayName) {
               this.service.setDisplayErrorData({"error": "displayNameRU"});
               return;
             }
 
-            if (keyValue == serviceRussianDisplayShortName) {
+            if (keyValue != "" && keyValue == serviceRussianDisplayShortName) {
               this.service.setDisplayErrorData({"error": "displayShortNameRU"});
               return;
             } else {

@@ -373,12 +373,12 @@ export class Messages {
  readonly services_form_tooltip_saml_signingCredentialType = 'This setting controls the type of the signature block produced in the final SAML response for this application. The latter, being the default, encodes the signature in PEM format inside a X509Data block while the former encodes the signature based on the resolved public key under a DEREncodedKeyValue block.';
  readonly services_form_tooltip_saml_assertionAudiences = 'Comma-separated list of audience urls to include in the assertion, in the addition to the entity id.';
 
- readonly services_form_tooltip_display_name = 'The service display name.';
- readonly services_form_tooltip_display_short_name = 'The service display short name.';
- readonly services_form_tooltip_display_name_en = 'The service\' english display name.';
- readonly services_form_tooltip_display_short_name_en = 'The service\'s english display short name.';
- readonly services_form_tooltip_display_name_ru = 'The service\'s russian display name.';
- readonly services_form_tooltip_display_short_name_ru = 'The service\'s russian display short name.';
+ readonly services_form_tooltip_display_name = 'The text used as service name in login page instructions.';
+ readonly services_form_tooltip_display_short_name = 'The service name text displayed to the user on a mobile device.';
+ readonly services_form_tooltip_display_name_en = 'The english translated text used as service name in login page instructions.';
+ readonly services_form_tooltip_display_short_name_en = 'The english translated service name text displayed to the user on a mobile device.';
+ readonly services_form_tooltip_display_name_ru = 'The russian translated text used as service name in login page instructions.';
+ readonly services_form_tooltip_display_short_name_ru = 'The russian translated service name text displayed to the user on a mobile device.';
 
  readonly services_form_tooltip_oidc_signToken = 'Whether ID tokens should be signed.';
  readonly services_form_tooltip_oidc_encrypt = 'Whether ID tokens should be encrypted.';
