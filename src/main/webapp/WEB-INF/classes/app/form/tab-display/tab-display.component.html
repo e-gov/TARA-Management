@@ -1,0 +1,16 @@
+<form #displayForm="ngForm">
+  <mat-card class="tabCard">
+    <mat-card-title>
+      <h5>Client Service Details</h5>
+    </mat-card-title>
+    <div class="cardContent">
+      <app-servicedisplayname [serviceError]="serviceDisplayNameError"></app-servicedisplayname>
+      <app-servicedisplayshortname [serviceError]="serviceDisplayShortNameError"></app-servicedisplayshortname>
+      <app-servicedisplaynameenglish [serviceError]="serviceDisplayNameENError"></app-servicedisplaynameenglish>
+      <app-servicedisplayshortnameenglish [serviceError]="serviceEnglishShortDisplayNameError"></app-servicedisplayshortnameenglish>
+      <app-servicedisplaynamerussian [serviceError]="serviceDisplayNameRUError"></app-servicedisplaynamerussian>
+      <app-servicedisplayshortnamerussian [serviceError]="serviceRussianShortDisplayNameError"></app-servicedisplayshortnamerussian>
+    </div>
+  </mat-card>
+  <button type="submit" style="display:none;" #submit></button>
+</form>
