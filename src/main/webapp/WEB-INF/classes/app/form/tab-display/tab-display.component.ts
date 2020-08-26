@@ -20,7 +20,6 @@ export class TabDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.formService.getDisplayErrorData().subscribe(err => {
-
       if (Object.keys(err).length === 0) {
         this.serviceDisplayNameError = "";
         this.serviceDisplayShortNameError = "";
@@ -28,38 +27,33 @@ export class TabDisplayComponent implements OnInit {
         this.serviceEnglishShortDisplayNameError = "";
         this.serviceDisplayNameRUError = "";
         this.serviceRussianShortDisplayNameError = "";
+      } else {
+        for (let i = 0; i < err.error.length; i++) {
+          if (err.error[i] == "displayName") {
+            this.serviceDisplayNameError = TabDisplayComponent.serviceNameExists;
+          }
+
+          if (err.error[i] == "displayShortName") {
+            this.serviceDisplayShortNameError = TabDisplayComponent.serviceNameExists;
+          }
+
+          if (err.error[i] == "displayNameEN") {
+            this.serviceDisplayNameENError = TabDisplayComponent.serviceNameExists;
+          }
+
+          if (err.error[i] == "displayShortNameEN") {
+            this.serviceEnglishShortDisplayNameError = TabDisplayComponent.serviceNameExists;
+          }
+
+          if (err.error[i] == "displayNameRU") {
+            this.serviceDisplayNameRUError = TabDisplayComponent.serviceNameExists;
+          }
+
+          if (err.error[i] == "displayShortNameRU") {
+            this.serviceRussianShortDisplayNameError = TabDisplayComponent.serviceNameExists;
+          }
+        }
       }
-
-      if (err.error == "displayName") {
-        this.serviceDisplayNameError = TabDisplayComponent.serviceNameExists;
-      }
-
-      if (err.error == "displayShortName") {
-        this.serviceDisplayShortNameError = TabDisplayComponent.serviceNameExists;
-      }
-
-      if (err.error == "displayNameEN") {
-        this.serviceDisplayNameENError = TabDisplayComponent.serviceNameExists;
-      }
-
-      if (err.error == "displayShortNameEN") {
-        this.serviceEnglishShortDisplayNameError = TabDisplayComponent.serviceNameExists;
-      }
-
-      if (err.error == "displayNameRU") {
-        this.serviceDisplayNameRUError = TabDisplayComponent.serviceNameExists;
-      }
-
-      if (err.error == "displayShortNameRU") {
-        this.serviceRussianShortDisplayNameError = TabDisplayComponent.serviceNameExists;
-      }
-
-
-
-
-
-
-
     });
   }
 }

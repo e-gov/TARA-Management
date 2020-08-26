@@ -27,6 +27,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {AppConfigService} from '../app-config.service';
 import {ServiceItem} from "../../domain/service-item";
 import {forEach} from "@angular/router/src/utils/collection";
+import {DefaultRegisteredServiceProperty} from '../../domain/property';
 
 enum Tabs {
   BASICS,
@@ -243,6 +244,14 @@ export class FormComponent implements OnInit {
   }
 
   checkServiceNameValidity() {
+    let isServiceDisplayNameError: boolean = false;
+    let isServiceDisplayShortNameError: boolean = false;
+    let isServiceEnglishDisplayNameError: boolean = false;
+    let isServiceEnglishDisplayShortNameError: boolean = false;
+    let isServiceRussianDisplayNameError: boolean = false;
+    let isServiceRussianDisplayShortNameError: boolean = false;
+    let errorList: string[] = [];
+
     for (const service of this.serviceList) {
         let serviceDisplayName = this.getDisplayName(service, "service.name");
         let serviceDisplayShortName = this.getDisplayName(service, "service.shortName");
@@ -251,54 +260,90 @@ export class FormComponent implements OnInit {
         let serviceRussianDisplayName = this.getDisplayName(service, "service.name.ru");
         let serviceRussianDisplayShortName = this.getDisplayName(service, "service.shortName.ru");
 
-        if (service.id != this.data.service.id) {
+        if (service.id != this.data.service.id && this.data.service.properties !== undefined) {
           for (let value of Object["values"](this.data.service.properties)) {
             const keyValue = value.values[0];
-            if (keyValue != "" && keyValue == serviceDisplayName) {
-              this.service.setDisplayErrorData({"error": "displayName"});
-              return;
-            } else {
-              this.service.setDisplayErrorData({});
+            if (keyValue != undefined && serviceDisplayName != undefined && keyValue != "" && keyValue.toLowerCase() == serviceDisplayName.toLowerCase()) {
+              errorList.push("displayName");
+              isServiceDisplayNameError = true;
             }
 
-            if (keyValue != "" && keyValue == serviceDisplayShortName) {
-              this.service.setDisplayErrorData({"error": "displayShortName"});
-              return;
-            } else {
-              this.service.setDisplayErrorData({});
+            if (keyValue != undefined && serviceDisplayShortName != undefined && keyValue != "" && keyValue.toLowerCase() == serviceDisplayShortName.toLowerCase()) {
+              errorList.push("displayShortName");
+              isServiceDisplayShortNameError = true;
             }
 
-            if (keyValue != "" && keyValue == serviceEnglishDisplayName) {
-              this.service.setDisplayErrorData({"error": "displayNameEN"});
-              return;
-            } else {
-              this.service.setDisplayErrorData({});
+            if (keyValue != undefined && serviceEnglishDisplayName != undefined && keyValue != "" && serviceDisplayName != serviceEnglishDisplayName && keyValue.toLowerCase() == serviceEnglishDisplayName.toLowerCase()) {
+              errorList.push("displayNameEN");
+              isServiceEnglishDisplayNameError = true;
             }
 
-            if (keyValue != "" && keyValue == serviceEnglishDisplayShortName) {
-              this.service.setDisplayErrorData({"error": "displayShortNameEN"});
-              return;
-            } else {
-              this.service.setDisplayErrorData({});
+            if (keyValue != undefined && serviceEnglishDisplayShortName != undefined && keyValue != "" && serviceDisplayShortName != serviceEnglishDisplayShortName && keyValue.toLowerCase() == serviceEnglishDisplayShortName.toLowerCase()) {
+              errorList.push("displayShortNameEN");
+              isServiceEnglishDisplayShortNameError = true;
             }
 
-            if (keyValue != "" && keyValue == serviceRussianDisplayName) {
-              this.service.setDisplayErrorData({"error": "displayNameRU"});
-              return;
+            if (keyValue != undefined && serviceRussianDisplayName != undefined && keyValue != "" && serviceDisplayName != serviceRussianDisplayName && keyValue.toLowerCase() == serviceRussianDisplayName.toLowerCase()) {
+              errorList.push("displayNameRU");
+              isServiceRussianDisplayNameError = true;
             }
 
-            if (keyValue != "" && keyValue == serviceRussianDisplayShortName) {
-              this.service.setDisplayErrorData({"error": "displayShortNameRU"});
-              return;
-            } else {
-              this.service.setDisplayErrorData({});
+            if (keyValue != undefined && serviceRussianDisplayShortName != undefined && keyValue != "" && serviceDisplayShortName != serviceRussianDisplayShortName && keyValue.toLowerCase() == serviceRussianDisplayShortName.toLowerCase()) {
+              errorList.push("displayShortNameRU");
+              isServiceRussianDisplayShortNameError = true;
             }
+        }
+          if (isServiceDisplayNameError || isServiceDisplayShortNameError || isServiceEnglishDisplayNameError || isServiceEnglishDisplayShortNameError || isServiceRussianDisplayNameError || isServiceRussianDisplayShortNameError) {
+            this.service.setDisplayErrorData({ "error": errorList });
+            errorList = [];
+            isServiceDisplayNameError = false;
+            isServiceDisplayShortNameError = false;
+            isServiceEnglishDisplayNameError = false;
+            isServiceEnglishDisplayShortNameError = false;
+            isServiceRussianDisplayNameError = false;
+            isServiceRussianDisplayShortNameError = false;
+            return;
+          } else {
+            this.service.setDisplayErrorData({});
+            errorList = [];
+            isServiceDisplayNameError = false;
+            isServiceDisplayShortNameError = false;
+            isServiceEnglishDisplayNameError = false;
+            isServiceEnglishDisplayShortNameError = false;
+            isServiceRussianDisplayNameError = false;
+            isServiceRussianDisplayShortNameError = false;
+          }
+      }
+    }
+
+    for (const service of this.serviceList) {
+      if (service.id == this.data.service.id && this.data.service.properties !== undefined) {
+        if (this.data.service.properties["service.name"] != undefined && this.data.service.properties["service.name"].values && (this.data.service.properties["service.name.en"] != undefined || !this.data.service.properties["service.name.en"].values)) {
+          this.addServicePropertyToTranslations(this.data.service.properties["service.name"].values, 'service.name.en');
+        }
+
+        if (this.data.service.properties["service.name"] != undefined && this.data.service.properties["service.name"].values && (this.data.service.properties["service.name.ru"] != undefined || !this.data.service.properties["service.name.ru"].values)) {
+          this.addServicePropertyToTranslations(this.data.service.properties["service.name"].values, 'service.name.ru');
+        }
+
+        if (this.data.service.properties["service.shortName"] != undefined && this.data.service.properties["service.shortName"].values && (this.data.service.properties["service.shortName.en"] != undefined || !this.data.service.properties["service.shortName.en"].values)) {
+          this.addServicePropertyToTranslations(this.data.service.properties["service.shortName"].values, 'service.shortName.en');
+        }
+
+        if (this.data.service.properties["service.shortName"] != undefined && this.data.service.properties["service.shortName"].values && (this.data.service.properties["service.shortName.ru"] != undefined || !this.data.service.properties["service.shortName.ru"].values)) {
+          this.addServicePropertyToTranslations(this.data.service.properties["service.shortName"].values, 'service.shortName.ru');
         }
       }
     }
 
     this.saveServiceForm();
 
+  }
+
+  addServicePropertyToTranslations(val, propertyName) {
+    if (this.data.service.properties[propertyName] != undefined && this.data.service.properties[propertyName].values.length == 0) {
+      this.data.service.properties[propertyName].values = val;
+    }
   }
 
   saveServiceForm() {

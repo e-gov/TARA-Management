@@ -3,7 +3,6 @@ import {ControlContainer, NgForm} from "@angular/forms";
 import {Messages} from "../../messages";
 import {Data} from "../data";
 import {Row, RowDataSource} from "../row";
-import {FormData} from "../../../domain/form-data";
 import {Util} from "../../util/util";
 import {DefaultRegisteredServiceProperty} from "../../../domain/property";
 
@@ -21,6 +20,8 @@ export class ServicedisplayshortnameComponent implements OnInit {
 
   dataSource: RowDataSource;
   displayName: string = "service.shortName";
+  displayNameEnglish: string = "service.shortName.en";
+  displayNameRussian: string = "service.shortName.ru";
 
   constructor(public messages: Messages,
               public data: Data) {
@@ -44,6 +45,14 @@ export class ServicedisplayshortnameComponent implements OnInit {
       this.data.service.properties[this.displayName] = new DefaultRegisteredServiceProperty();
       if (val) {
         this.data.service.properties[this.displayName].values = [val];
+
+        if (Object.keys(this.data.service.properties).indexOf(this.displayNameEnglish) == -1) {
+          this.data.service.properties[this.displayNameEnglish] = new DefaultRegisteredServiceProperty();
+        }
+
+        if (Object.keys(this.data.service.properties).indexOf(this.displayNameRussian) == -1) {
+          this.data.service.properties[this.displayNameRussian] = new DefaultRegisteredServiceProperty();
+        }
       }
     }
   }
