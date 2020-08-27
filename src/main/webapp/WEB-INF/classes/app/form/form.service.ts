@@ -49,6 +49,12 @@ export class FormService {
     return this.displayErrorsSubject.asObservable();
   }
 
+  isInputUsingSpecialCharacters(value: string) {
+    const cyrillicCharacters = /[а-яА-ЯЁё]/;
+    const specialCharacters = ["Õ", "Š", "Ž", "š", "ž", "õ", "Ą", "Č", "Ę", "Ė", "Į", "Š", "Ų", "Ū", "Ž", "ą", "č", "ę", "ė", "į", "š", "ų", "ū", "ž"];
+    return cyrillicCharacters.test(value) || specialCharacters.some(char => value.includes(char));
+  }
+
   formData(): Observable<FormData> {
     return this.http.get<FormData>('formData')
       .pipe(

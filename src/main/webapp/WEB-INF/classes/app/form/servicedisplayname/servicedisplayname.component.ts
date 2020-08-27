@@ -3,9 +3,9 @@ import {Messages} from "../../messages";
 import {Data} from "../data";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {Row, RowDataSource} from "../row";
-import {FormData} from "../../../domain/form-data";
 import {Util} from "../../util/util";
 import {DefaultRegisteredServiceProperty} from "../../../domain/property";
+import {FormService} from '../form.service';
 
 @Component({
   selector: 'app-servicedisplayname',
@@ -23,9 +23,11 @@ export class ServicedisplaynameComponent implements OnInit {
   displayName: string = "service.name";
   displayNameEnglish: string = "service.name.en";
   displayNameRussian: string = "service.name.ru";
+  maxInputCharacters: number = 20;
 
   constructor(public messages: Messages,
-              public data: Data) {
+              public data: Data,
+              public formService: FormService) {
   }
 
   ngOnInit() {
@@ -37,6 +39,14 @@ export class ServicedisplaynameComponent implements OnInit {
       rows.push(new Row(p));
     }
     this.dataSource = new RowDataSource(rows);
+  }
+
+  onInputChange(val: string) {
+    if (this.formService.isInputUsingSpecialCharacters(val)) {
+      this.maxInputCharacters = 20;
+    } else {
+      this.maxInputCharacters = 40;
+    }
   }
 
   doChange(val: string) {
