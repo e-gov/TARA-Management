@@ -23,7 +23,7 @@ export class ServicedisplayshortnameComponent implements OnInit {
   displayName: string = "service.shortName";
   displayNameEnglish: string = "service.shortName.en";
   displayNameRussian: string = "service.shortName.ru";
-  maxInputCharacters: number = 20;
+  maxInputCharacters: number = 40;
 
   constructor(public messages: Messages,
               public data: Data,

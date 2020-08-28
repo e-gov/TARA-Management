@@ -23,7 +23,7 @@ export class ServicedisplaynameComponent implements OnInit {
   displayName: string = "service.name";
   displayNameEnglish: string = "service.name.en";
   displayNameRussian: string = "service.name.ru";
-  maxInputCharacters: number = 20;
+  maxInputCharacters: number = 150;
 
   constructor(public messages: Messages,
               public data: Data,
@@ -39,14 +39,6 @@ export class ServicedisplaynameComponent implements OnInit {
       rows.push(new Row(p));
     }
     this.dataSource = new RowDataSource(rows);
-  }
-
-  onInputChange(val: string) {
-    if (this.formService.isInputUsingSpecialCharacters(val)) {
-      this.maxInputCharacters = 20;
-    } else {
-      this.maxInputCharacters = 40;
-    }
   }
 
   doChange(val: string) {

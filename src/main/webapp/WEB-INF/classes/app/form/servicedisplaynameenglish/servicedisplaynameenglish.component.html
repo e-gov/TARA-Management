@@ -5,7 +5,7 @@
     </mat-placeholder>
     <input matInput #serviceDisplayNameEN="ngModel" name="serviceDisplayNameEN" id="serviceDisplayNameEN"
            [ngModel]="data.service.properties['service.name.en'] ? data.service.properties['service.name.en'].values : ''"
-           (change)="doChange($event.target.value)" (input)="onInputChange($event.target.value)" [attr.maxlength]="maxInputCharacters">
+           (change)="doChange($event.target.value)" [attr.maxlength]="maxInputCharacters">
     <mat-hint align="end">
       <app-hint></app-hint>
     </mat-hint>
