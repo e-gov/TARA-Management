@@ -1,6 +1,6 @@
 <img src='doc/img/ee_cef_0.png'></img>
 
-CAS Services Management Overlay
+[DEPRECATED] CAS Services Management Overlay
 ============================
 
 Services management web application Maven overlay for CAS with externalized configuration.
